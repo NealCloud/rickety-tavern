@@ -5,23 +5,30 @@ var fireStuff = {};
 	const main = {
 		
 		 initFirebase : (state) => ({
-			initFirebase : () =>{			
+			initFirebase : (onSignIn, onSignOut) =>{			
 				// Shortcuts to Firebase SDK features.
 				state.auth = firebase.auth();
 				state.database = firebase.database();
-				state.storage = firebase.storage();
-				//create refs to the categories/tags      
-				state.categories = firebase.database().ref("Categories");
-				state.tagsRef = firebase.database().ref("Tags");  
+				state.storage = firebase.storage();				  
+			
 				// Initiates Firebase auth and listen to auth state changes.
 				//this.auth.onAuthStateChanged(this.onAuthStateChanged.bind(this));  
-				state.auth.onAuthStateChanged( (user) => state.self.onAuthStateChanged(user,  state.self.onSignIn, state.self.onSignOut));
+				state.auth.onAuthStateChanged( (user) => state.self.onAuthStateChanged(user,  onSignIn, onSignOut));
+				
+				return new Promise(function(res, rej){					
+					if(state.auth){
+						 res();
+					}
+					else{
+						rej('Firebase Failed to Load');
+					}					
+				})				
 			}
 		}),
 
 		 onAuthStateChanged : (state) => ({
 			 onAuthStateChanged : (user, callin, callout) => {			
-					console.log("Auth has changed!", user);
+					console.log("Auth has changed!");
 					if(user){
 						callin();					
 					}					
@@ -53,7 +60,18 @@ var fireStuff = {};
 			
 		 }
 	}),
-
+		//create database refs
+		createRefs : (state) => ({
+			createRefs : (refs) =>{
+				var len = refs.length;
+				
+		    for(var i = 0; i < len; i++){
+						state[refs[i] + "Ref"] = state.database.ref(refs[i]);
+				}					
+			}	
+		}),
+		
+		
 		//signout firebase function
 	 signOut : (state) => ({
 		 

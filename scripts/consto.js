@@ -15,10 +15,13 @@ const Tavern = (self) =>{
 
 			tagList : [],
 			randomGridClass : ["", "grid-item--width2", "grid-item--height2"],
+			refList : ["Categories", "Tags"],
 			
 			init: (self) => {
 				state.self = self;	
-				state.self.initFirebase();
+				state.self.initFirebase( state.self.onSignIn, state.self.onSignOut)				  
+					.then(() => console.log('firebase started'))
+					.catch((e) => console.log(e))
 			}
 			
 		}
@@ -43,13 +46,15 @@ const Tavern = (self) =>{
 			fireStuff.onAuthStateChanged(state),
 			fireStuff.signIn(state),
 			fireStuff.signOut(state),
+			fireStuff.createRefs(state),
 			
 			onSignIn(state),
 			onSignOut(state),
 			getTags(state),			
 			loadItems(state),
 			startIso(state),
-			renderCats(state),		
+			renderCats(state),
+			
 			bugo(state)
 		)
 }
@@ -63,6 +68,7 @@ const onSignOut = (state) => ({
 
 const onSignIn = (state) => ({
 	onSignIn : () => {
+		state.self.createRefs(state.refList);
 		console.log('signed in!');
 		state.signOutBtn.show();
 		state.signInBtn.hide();
@@ -76,7 +82,7 @@ const onSignIn = (state) => ({
 const getTags = (state) => ({    
     //var self = this;
     //loads up the tags from firebase
-    getTags :  () => { state.tagsRef.once("value", function(data){
+    getTags :  () => { state.TagsRef.once("value", function(data){
 					tags = data.val();       
 					for(var i in tags){
 							state.tagList.push(tags[i]);
@@ -92,20 +98,22 @@ const loadItems = (state) => ({
     //retrive the tags first
     state.self.getTags();    
     
-    state.categories.once("value", function(data){
+    state.CategoriesRef.once("value", function(data){
         
 			var cats = data.val();
 			var len = Object.keys(cats).length;
 			var count = 0;			 
       for(let i in cats){
-            var info = firebase.database().ref("Categories/" + i + "/Tags").once("value", (data) =>{             count += 1;   
+            var info = state.database.ref("Categories/" + i + "/Tags")
+						.once("value", (data) =>{
+								count += 1;   
                 var info = data.val();
 							  if(count == len){
 									state.self.renderCats(i, info, true);
 								}	
 								 else{
 									 	state.self.renderCats(i, info);
-								 }
+								}
                 
             }).then(function(e){
                             
@@ -187,6 +195,13 @@ const startIso = (state) => ({
     state.btnSort.show();
 		 }
 });
+
+//const createRefs = (state) => ({
+//	createRefs : () =>{
+//		state.categories = state.database.ref("Categories");
+//		state.tagsRef = state.database.ref("Tags"); 		
+//	}	
+//})
 
 //Debugging
 const bugo = (state) =>({
