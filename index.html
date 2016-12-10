@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Relax and hang out">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Tavern</title>
+
+  <!-- Disable tap highlight on IE -->
+  <meta name="msapplication-tap-highlight" content="no">
+
+  <!-- Web Application Manifest -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Tavern">
+  <meta name="theme-color" content="#303F9F">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Tavern">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
+
+  <!-- Tile icon for Win8 -->
+  <meta name="msapplication-TileColor" content="#3372DF">
+  <meta name="msapplication-navbutton-color" content="#303F9F">
+
+  <!-- Material Design Lite -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
+  <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+
+  <!-- App Styling -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+
+  <!-- Header section containing logo -->
+ <h2>Howdy</h2>
+ <div id="main-grid" class="grid">
+   
+</div>
+
+<button id="signin" class="mdl-button mdl-js-button mdl-button--raised">
+  Sign In
+</button>
+	<button id="signout" class="mdl-button mdl-js-button mdl-button--raised">
+  Sign Out
+</button>
+<div class="filterBtn">
+    <button class="mdl-button mdl-js-button mdl-button--raised" data-filter=".fun">
+        Filter fun
+    </button>
+     <button class="mdl-button mdl-js-button mdl-button--raised" data-filter=".edu">
+        Filter edu
+    </button>
+</div>
+    
+<div class="sortBtn">
+    <button class="mdl-button mdl-js-button mdl-button--raised" data-sort="name">
+       Sort Name
+    </button>
+     <button class="mdl-button mdl-js-button mdl-button--raised" data-sort="number">
+        Sort Num
+    </button>
+</div>
+    
+
+<!-- Firebase -->
+<!-- ***********************************************************************************************************************
+     * TODO(DEVELOPER): Paste the initialization snippet from: Firebase Console > Overview > Add Firebase to your web app. *
+     *********************************************************************************************************************** -->
+    
+<script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyB_ChBRirWlouuh7gLo-71X-tDZsrJTSz4",
+    authDomain: "trumps-tavern.firebaseapp.com",
+    databaseURL: "https://trumps-tavern.firebaseio.com",
+    storageBucket: "trumps-tavern.appspot.com",
+    messagingSenderId: "1027193811187"
+  };
+  firebase.initializeApp(config);
+</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="scripts/iso.js"></script>
+	<script src="scripts/firebaseUtils.js"></script>
+<script src="scripts/consto.js"></script>
+	
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "name": "Trump Tavern",
+  "launch_path": "/index.html",
+  "description": "List of useful links",
+  "developer": {
+    "name": "NCloud inc.",
+    "url": "https://firebase.google.com"
+  },
+  "installs_allowed_from": [
+    "*"
+  ],
+  "default_locale": "en",
+  "permissions": {
+  },
+  "locales": {
+    "en": {
+      "name": "Trump Tavern",
+      "description": "Linka Toad"
+    }
+  }
+}

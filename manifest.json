@@ -1,0 +1,7 @@
+{
+  "name": "Trump Tavern",
+  "short_name": "Trump Tavern",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "orientation": "portrait"
+}
