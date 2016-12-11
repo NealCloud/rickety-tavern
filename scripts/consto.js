@@ -29,11 +29,11 @@ const Tavern = (self) =>{
 		//event handlers
 		state.signInBtn.on("click", function(e){
 				state.self.signIn('g', state.self.bugo);
-		}),
+		})
 
 		state.signOutBtn.on("click", function(e){
 				state.self.signOut();
-		}),  
+		})  
 		
 		state.btnFilter.hide();  
 		state.btnSort.hide();  
@@ -58,7 +58,7 @@ const Tavern = (self) =>{
 			bugo(state)
 		)
 }
-
+//mandatory signIn / signOut functions
 const onSignOut = (state) => ({
 	onSignOut : () => {
 		state.signInBtn.show();
@@ -134,14 +134,12 @@ const renderCats = (state) => ({
 			var rando = state.randomGridClass[randNum];
 			//create the grid div and add classes
 			var cataLink = $("<a>", {
-
 					href: "/cats.html#" + title       
 			});
 			var linkDiv = $("<div>",{
 				 class: "grid-item " + rando + tempTags,
 				 html: "<p class='name'>" + title + "</p><p class='number'>" + randNum + "</p>"				 
 			});
-
 			//append to the grid
 			linkDiv.appendTo(cataLink);
 			cataLink.appendTo(state.grid); 
@@ -166,9 +164,10 @@ const startIso = (state) => ({
                         number: '.number parseInt'    
                  }
     });
+			
     //create filter button handler
-     state.btnFilter.on("click", "button", function() {
-        var filterValue = $(this).attr('data-filter');        
+     state.btnFilter.on("click", "a", function() {
+        var filterValue = $(this).attr('data-filter'); 			 
         state.iso.isotope({ filter: filterValue });        
     });
     //create sort button handler
@@ -177,13 +176,13 @@ const startIso = (state) => ({
           state.iso.isotope({ sortBy: sortByValue });
     });
     //create checked class button toggler for each group
-    state.btnGroup.each( function( i, buttonGroup ) {
-        var $buttonGroup = $( buttonGroup );
-        $buttonGroup.on( 'click', 'button', function() {
-            $buttonGroup.find('.is-checked').removeClass('is-checked');
-            $( this ).addClass('is-checked');
-        });
-    });
+//    state.btnGroup.each( function( i, buttonGroup ) {
+//        var $buttonGroup = $( buttonGroup );
+//        $buttonGroup.on( 'click', 'button', function() {
+//            $buttonGroup.find('.is-checked').removeClass('is-checked');
+//            $( this ).addClass('is-checked');
+//        });
+//    });
     
     state.btnFilter.show();
     state.btnSort.show();
