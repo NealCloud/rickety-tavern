@@ -99,27 +99,22 @@ const loadItems = (state) => ({
     state.self.getTags();    
     
     state.CategoriesRef.once("value", function(data){
-        
+      
 			var cats = data.val();
 			var len = Object.keys(cats).length;
+			console.log(cats);  
 			var count = 0;			 
       for(let i in cats){
-            var info = state.database.ref("Categories/" + i + "/Tags")
-						.once("value", (data) =>{
-								count += 1;   
-                var info = data.val();
+								count += 1;
+							  var tagInfo = cats[i].Tags              
 							  if(count == len){
-									state.self.renderCats(i, info, true);
+									state.self.renderCats(i, tagInfo, true);
 								}	
 								 else{
-									 	state.self.renderCats(i, info);
-								}
-                
-            }).then(function(e){
-                            
-            });       
+									 	state.self.renderCats(i, tagInfo);
+								}                           
         }		       
-			   //setTimeout(state.self.startIso, 500);
+			
     }).then(function(){
 			//console.log('completed');			
 		})
@@ -128,7 +123,7 @@ const loadItems = (state) => ({
 
 //Render the Categories on the Grid
 const renderCats = (state) => ({
-		renderCats : (text, tags, final) => {
+		renderCats : (title, tags, final) => {
 			//get the tags associated with each Category and put them in a string
 			var tempTags = "";
 			for(var i in tags){
@@ -138,19 +133,18 @@ const renderCats = (state) => ({
 			var randNum = Math.floor(Math.random() * (state.randomGridClass.length));
 			var rando = state.randomGridClass[randNum];
 			//create the grid div and add classes
-			var cata = $("<a>", {
+			var cataLink = $("<a>", {
 
-					href: "/cats.html#" + text       
+					href: "/cats.html#" + title       
 			});
-			var link = $("<div>",{
+			var linkDiv = $("<div>",{
 				 class: "grid-item " + rando + tempTags,
-				 html: "<p class='name'>" + text + "</p><p class='number'>" + randNum + "</p>",
-				 text: text
+				 html: "<p class='name'>" + title + "</p><p class='number'>" + randNum + "</p>"				 
 			});
 
 			//append to the grid
-			link.appendTo(cata);
-			cata.appendTo(state.grid); 
+			linkDiv.appendTo(cataLink);
+			cataLink.appendTo(state.grid); 
 			//if final div is appended start iso
 			if(final){
 				state.self.startIso();
@@ -195,13 +189,6 @@ const startIso = (state) => ({
     state.btnSort.show();
 		 }
 });
-
-//const createRefs = (state) => ({
-//	createRefs : () =>{
-//		state.categories = state.database.ref("Categories");
-//		state.tagsRef = state.database.ref("Tags"); 		
-//	}	
-//})
 
 //Debugging
 const bugo = (state) =>({
