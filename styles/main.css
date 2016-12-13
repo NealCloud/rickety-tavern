@@ -21,6 +21,10 @@
     background: green;
 }
 
+#grid{
+	height: 500px;
+}
+
 #background1{
 	background-image: url(/pics/topM.png);
 }
@@ -31,3 +35,10 @@
 #background3{
 	background-image: url(/pics/topM3.png);
 }
+
+
+/*
+.demo-list-three {
+  width: 650px;
+}
+*/

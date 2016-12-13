@@ -9,11 +9,13 @@ const Tavern = (self) =>{
 			btnFilter : $(".filterBtn"),
 			btnSort : $(".sortBtn"),
 			btnGroup : $(".sortBtn, .filterBtn"),
+			pageTitle : $("#pageTitle"),
 			
 			notRendered : true,
 			iso : null,
 
 			tagList : [],
+			randomLinkTitle: ["Linkerest", "Linkali", "Linkahorn", "Linkimanjaro", "Linkuji"],
 			randomGridClass : ["", "grid-item--width2", "grid-item--height2"],
 			refList : ["Categories", "Tags"],
 			
@@ -95,6 +97,11 @@ const getTags = (state) => ({
 ////load all the categories from firebase
 const loadItems = (state) => ({
 	loadItems: ()=>{	
+		
+		
+		var randNum = Math.floor(Math.random() * (state.randomLinkTitle.length));
+		state.pageTitle.text(state.randomLinkTitle[randNum]);
+		state
     //retrive the tags first
     state.self.getTags();    
     
@@ -124,6 +131,8 @@ const loadItems = (state) => ({
 //Render the Categories on the Grid
 const renderCats = (state) => ({
 		renderCats : (title, tags, final) => {
+			
+			
 			//get the tags associated with each Category and put them in a string
 			var tempTags = "";
 			for(var i in tags){
