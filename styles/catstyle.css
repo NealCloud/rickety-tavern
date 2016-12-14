@@ -1,0 +1,7 @@
+i > .was-visited{
+	background-color: green;
+}
+
+section.section--center {
+  max-width: 860px;
+}

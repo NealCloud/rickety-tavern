@@ -6,6 +6,8 @@ const CatLinks = (self) => {
 		pageTitle : $(".mdl-layout-title"),
 		linkList : $("#linkList"),
 		tabButtons: $(".mdl-layout__tab-bar"),
+		searchField: $("#search-field"),
+		
 		
 		roomName : window.location.hash.substr(1),
 		notRendered : true,
@@ -58,14 +60,26 @@ const onSignOut = (state) => ({
 
 const onSignIn = (state) => ({
 	onSignIn : () => {
-	  state.self.createRefs(["Pages"]);
+	  state.self.createRefs(["Pages", "Categories"]);
 		console.log('signed in!');
 		state.signOutBtn.show();
 		state.signInBtn.hide();
 		
 		if(state.notRendered){
 			  state.notRendered = false;
-				state.self.loadItems();
+			
+			state.CategoriesRef.once("value").then(function(snap){
+				if(snap.child(state.roomName).exists()){					
+					state.self.loadItems();
+				}
+				else{
+					console.log("no such link page");
+				}
+			}).catch(function(){
+				
+			});	
+			
+				
 		}							
 	}
 });
@@ -101,45 +115,66 @@ const loadItems = (state) => ({
 			
 			 state.tabButtons.on("click", "a", function() {
 				 var filterValue = $(this).attr('data-filter'); 				 
-				 state.self.filterLinks(filterValue);        
+				 var tempLinks = [];
+				 if(filterValue === "showAll"){
+					 tempLinks = state.linkArray; 
+				 }
+				 else{
+					 tempLinks = state.self.filterLinks(filterValue, true, true);
+				 }
+				  state.self.clearLinks();
+					state.self.renderAllLinks(tempLinks);
     		});
+			
+			 state.searchField.on("input",function(){
+				 var filterValue = $(this).val();
+				 var tempLinks = state.self.filterLinks(filterValue, null, false);
+				 state.self.clearLinks();
+					state.self.renderAllLinks(tempLinks);
+			 });
+			
+			state.linkList.on("click", "i", function(){
+				var id = $(this).attr("id");
+				var linkInfo = (state.self.filterLinks("key", id, true));
+				$(".mdl-layout__tab").removeClass("is-active");
+				$('.mdl-layout__tab-panel').removeClass('is-active');
+				
+				$("#linkName").val(linkInfo[0].key);
+				$("#linkUrl").val(linkInfo[0].href);
+				$("#linkDescrip").val(linkInfo[0].description);
+				
+			//	$("#sample1").attr();
+				$("#addLinkTab").addClass("is-active");				 
+				$('#fixed-tab-3').addClass('is-active');
+			})
 		})
 	}
 })
 
+
+
 const filterLinks = (state) =>({
-	filterLinks : (filterWord) => {		
+	filterLinks : (filterKey, filterValue, filterByKey) => {		
 		var tempLinks = [];
-		var filterFunc = null;
-		var filterWord = "";
+		var filterWord = filterKey;
 		
-			const filterVisted = (link) => {
-			return link.visted;
-		}
+		const filterVisited = (link) => {
+			return link[filterWord] == filterValue;
+		}		
 		
-		const filterDescription = (link) =>{
-			console.log(link.description.indexOf("boogle"));
-			if(link.description.indexOf(filterWord) !== -1){
+		const filterDescription = (link) =>{			
+			if((link.description + link.key).indexOf(filterWord) !== -1){
 				return true;
 			}
 		}
 		
-		switch(filterWord){
-			case "visited" : 
-				filterFunc = filterDescription;
-				break;
-			default:
-				filterFunc = filterDescription;
-				filterWord = "boogle";
+		var filterFunc = filterDescription;
+		if(filterByKey){
+			var filterFunc = filterVisited;
 		}
 		
-	
-		
-		tempLinks = state.linkArray.filter(filterFunc);
-				console.log(tempLinks);
-		
-		state.self.clearLinks();
-		state.self.renderAllLinks(tempLinks);
+		return state.linkArray.filter(filterFunc);			
+				
 	}	
 });
 
@@ -155,8 +190,7 @@ const renderAllLinks = (state) =>({
 		 for(let i = 0; i < len; i++){	
 					if(i == len){
 							state.self.renderLink(linkArray[i], true);
-					}	
-			 
+					}				 
 					 else{
 							state.self.renderLink(linkArray[i]);
 					}                           
@@ -167,7 +201,10 @@ const renderAllLinks = (state) =>({
 
 const renderLink = (state) => ({
 	renderLink : (linkData, finalCount) => {
-		
+		var visited = "";
+		if(linkData.visited){
+			visited = " was-visited";
+		}
 		//console.log(linkData);
 		
 		var listItem = $("<li>", {
@@ -175,7 +212,7 @@ const renderLink = (state) => ({
 		})		
 		var span1 = $("<span>",{
 			class: "mdl-list__item-primary-content",
-			html: "<i class='material-icons mdl-list__item-avatar'>http</i><span>" + 
+			html: "<i class='material-icons mdl-list__item-avatar" + visited + "'>http</i><span>" + 
 			linkData.key + "</span><span class='mdl-list__item-text-body'>" +
 			linkData.description + "</span>"
 		});
@@ -188,7 +225,7 @@ const renderLink = (state) => ({
 		
 		var span2 = $("<span>", {
 			class: "mdl-list__item-primary-content",
-			html: "<span class='mdl-list__item-secondary-content'><a class='mdl-list__item-secondary-action' href='#'><i class='material-icons'>star</i></a></span>"
+			html: "<span class='mdl-list__item-secondary-content'><a class='mdl-list__item-secondary-action'><i id='" + linkData.key +  "' class='material-icons star'>star</i></a></span>"
 		});
 		
 		span1.appendTo(listItem);

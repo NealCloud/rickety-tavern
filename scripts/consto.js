@@ -10,6 +10,7 @@ const Tavern = (self) =>{
 			btnSort : $(".sortBtn"),
 			btnGroup : $(".sortBtn, .filterBtn"),
 			pageTitle : $("#pageTitle"),
+			btnShuffle : $('#btnShuffle'),
 			
 			notRendered : true,
 			iso : null,
@@ -147,7 +148,9 @@ const renderCats = (state) => ({
 			});
 			var linkDiv = $("<div>",{
 				 class: "grid-item " + rando + tempTags,
-				 html: "<p class='name'>" + title + "</p><p class='number'>" + randNum + "</p>"				 
+				 html: "<img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg' />" +
+				"<p class='name'>" + title + "</p>"
+				
 			});
 			//append to the grid
 			linkDiv.appendTo(cataLink);
@@ -164,15 +167,25 @@ const startIso = (state) => ({
 	   startIso: () => {
      //var self = this;
     //initialize isotope
-     state.iso = state.grid.isotope({
+			 //console.log($);
+     
+			 state.iso =  state.grid.isotope({
                   // options
                   itemSelector: '.grid-item',
-                  layoutMode: 'fitRows',
+                  layoutMode: 'masonry',
+			 
+									//percentPosition: true,
+//									masonry: {
+//										columnWidth: '.grid-sizer'
+//									},
                     getSortData: {
                         name: '.name',                       
                         number: '.number parseInt'    
                  }
-    });
+					})
+		 
+			
+   
 			
     //create filter button handler
      state.btnFilter.on("click", "a", function() {
@@ -184,6 +197,13 @@ const startIso = (state) => ({
           var sortByValue = $(this).attr('data-sort');
           state.iso.isotope({ sortBy: sortByValue });
     });
+			 
+			  
+			 
+			 
+		state.btnShuffle.on( 'click', function() {
+         state.iso.isotope('shuffle');
+    });	 
     //create checked class button toggler for each group
 //    state.btnGroup.each( function( i, buttonGroup ) {
 //        var $buttonGroup = $( buttonGroup );
