@@ -1,13 +1,13 @@
-.grid-item {
+.grid-item {	
   float: left;
-  width: 50px;
-  height: 50px;
-  background: #e6e5e4;
-  border: 2px solid #b6b5b4;
+  width: 96px;
+  height: 96px;
+  background: #f08315;
+  border: 2px solid #f5810e;
 }
 
-.grid-item--width2 { width: 100px; }
-.grid-item--height2 { height: 100px; }
+.grid-item--width2 { width: 196px; }
+.grid-item--height2 { height: 196px; }
 
 .edu{
     color: red;
@@ -20,3 +20,34 @@
 .is-checked{
     background: green;
 }
+
+#grid{
+	height: 800px;
+}
+
+#background1{
+	background-image: url(/pics/topM.png);
+}
+#background2{
+	background-image: url(/pics/topM2.png);
+	color: #d47719;
+}
+#background3{
+	background-image: url(/pics/topM3.png);
+}
+
+.grid-item img {	  
+	position: absolute;
+  width: 100%;
+	height: 100%;
+}
+
+.grid-item p{
+	color: white;
+	position: absolute;
+}
+/*
+.demo-list-three {
+  width: 650px;
+}
+*/

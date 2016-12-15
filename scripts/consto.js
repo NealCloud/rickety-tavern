@@ -9,16 +9,22 @@ const Tavern = (self) =>{
 			btnFilter : $(".filterBtn"),
 			btnSort : $(".sortBtn"),
 			btnGroup : $(".sortBtn, .filterBtn"),
+			pageTitle : $("#pageTitle"),
+			btnShuffle : $('#btnShuffle'),
 			
 			notRendered : true,
 			iso : null,
 
 			tagList : [],
+			randomLinkTitle: ["Linkerest", "Linkali", "Linkahorn", "Linkimanjaro", "Linkuji"],
 			randomGridClass : ["", "grid-item--width2", "grid-item--height2"],
+			refList : ["Categories", "Tags"],
 			
 			init: (self) => {
 				state.self = self;	
-				state.self.initFirebase();
+				state.self.initFirebase( state.self.onSignIn, state.self.onSignOut)				  
+					.then(() => console.log('firebase started'))
+					.catch((e) => console.log(e))
 			}
 			
 		}
@@ -26,11 +32,11 @@ const Tavern = (self) =>{
 		//event handlers
 		state.signInBtn.on("click", function(e){
 				state.self.signIn('g', state.self.bugo);
-		}),
+		})
 
 		state.signOutBtn.on("click", function(e){
 				state.self.signOut();
-		}),  
+		})  
 		
 		state.btnFilter.hide();  
 		state.btnSort.hide();  
@@ -43,17 +49,19 @@ const Tavern = (self) =>{
 			fireStuff.onAuthStateChanged(state),
 			fireStuff.signIn(state),
 			fireStuff.signOut(state),
+			fireStuff.createRefs(state),
 			
 			onSignIn(state),
 			onSignOut(state),
 			getTags(state),			
 			loadItems(state),
 			startIso(state),
-			renderCats(state),		
+			renderCats(state),
+			
 			bugo(state)
 		)
 }
-
+//mandatory signIn / signOut functions
 const onSignOut = (state) => ({
 	onSignOut : () => {
 		state.signInBtn.show();
@@ -63,6 +71,7 @@ const onSignOut = (state) => ({
 
 const onSignIn = (state) => ({
 	onSignIn : () => {
+		state.self.createRefs(state.refList);
 		console.log('signed in!');
 		state.signOutBtn.show();
 		state.signInBtn.hide();
@@ -76,7 +85,7 @@ const onSignIn = (state) => ({
 const getTags = (state) => ({    
     //var self = this;
     //loads up the tags from firebase
-    getTags :  () => { state.tagsRef.once("value", function(data){
+    getTags :  () => { state.TagsRef.once("value", function(data){
 					tags = data.val();       
 					for(var i in tags){
 							state.tagList.push(tags[i]);
@@ -89,29 +98,31 @@ const getTags = (state) => ({
 ////load all the categories from firebase
 const loadItems = (state) => ({
 	loadItems: ()=>{	
+		
+		
+		var randNum = Math.floor(Math.random() * (state.randomLinkTitle.length));
+		state.pageTitle.text(state.randomLinkTitle[randNum]);
+		
     //retrive the tags first
     state.self.getTags();    
     
-    state.categories.once("value", function(data){
-        
+    state.CategoriesRef.once("value", function(data){
+      
 			var cats = data.val();
 			var len = Object.keys(cats).length;
+			console.log(cats);  
 			var count = 0;			 
       for(let i in cats){
-            var info = firebase.database().ref("Categories/" + i + "/Tags").once("value", (data) =>{             count += 1;   
-                var info = data.val();
+								count += 1;
+							  var tagInfo = cats[i].Tags              
 							  if(count == len){
-									state.self.renderCats(i, info, true);
+									state.self.renderCats(i, tagInfo, true);
 								}	
 								 else{
-									 	state.self.renderCats(i, info);
-								 }
-                
-            }).then(function(e){
-                            
-            });       
+									 	state.self.renderCats(i, tagInfo);
+								}                           
         }		       
-			   //setTimeout(state.self.startIso, 500);
+			
     }).then(function(){
 			//console.log('completed');			
 		})
@@ -120,29 +131,29 @@ const loadItems = (state) => ({
 
 //Render the Categories on the Grid
 const renderCats = (state) => ({
-		renderCats : (text, tags, final) => {
+		renderCats : (title, tags, final) => {
+			
 			//get the tags associated with each Category and put them in a string
 			var tempTags = "";
 			for(var i in tags){
-					tempTags += " " + state.tagList[i - 1];
+					tempTags += " " + state.tagList[tags[i]];
 			}
 			//create a random grid length/height
 			var randNum = Math.floor(Math.random() * (state.randomGridClass.length));
 			var rando = state.randomGridClass[randNum];
 			//create the grid div and add classes
-			var cata = $("<a>", {
-
-					href: "/cats.html#" + text       
+			var cataLink = $("<a>", {
+					href: "/cats.html#" + title       
 			});
-			var link = $("<div>",{
+			var linkDiv = $("<div>",{
 				 class: "grid-item " + rando + tempTags,
-				 html: "<p class='name'>" + text + "</p><p class='number'>" + randNum + "</p>",
-				 text: text
+				 html: "<img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg' />" +
+				"<p class='name'>" + title + "</p>"
+				
 			});
-
 			//append to the grid
-			link.appendTo(cata);
-			cata.appendTo(state.grid); 
+			linkDiv.appendTo(cataLink);
+			cataLink.appendTo(state.grid); 
 			//if final div is appended start iso
 			if(final){
 				state.self.startIso();
@@ -155,18 +166,21 @@ const startIso = (state) => ({
 	   startIso: () => {
      //var self = this;
     //initialize isotope
-     state.iso = state.grid.isotope({
+			 //console.log($);
+     
+			 state.iso =  state.grid.isotope({
                   // options
                   itemSelector: '.grid-item',
-                  layoutMode: 'fitRows',
+                  layoutMode: 'masonry',	
                     getSortData: {
                         name: '.name',                       
                         number: '.number parseInt'    
                  }
-    });
+					})
+			
     //create filter button handler
-     state.btnFilter.on("click", "button", function() {
-        var filterValue = $(this).attr('data-filter');        
+     state.btnFilter.on("click", "a", function() {
+        var filterValue = $(this).attr('data-filter'); 			 
         state.iso.isotope({ filter: filterValue });        
     });
     //create sort button handler
@@ -174,14 +188,20 @@ const startIso = (state) => ({
           var sortByValue = $(this).attr('data-sort');
           state.iso.isotope({ sortBy: sortByValue });
     });
+			 	 
+		state.btnShuffle.on( 'click', function() {
+         state.iso.isotope('shuffle');
+				var randNum = Math.floor(Math.random() * (state.randomLinkTitle.length));
+				state.pageTitle.text(state.randomLinkTitle[randNum]);
+    });	 
     //create checked class button toggler for each group
-    state.btnGroup.each( function( i, buttonGroup ) {
-        var $buttonGroup = $( buttonGroup );
-        $buttonGroup.on( 'click', 'button', function() {
-            $buttonGroup.find('.is-checked').removeClass('is-checked');
-            $( this ).addClass('is-checked');
-        });
-    });
+//    state.btnGroup.each( function( i, buttonGroup ) {
+//        var $buttonGroup = $( buttonGroup );
+//        $buttonGroup.on( 'click', 'button', function() {
+//            $buttonGroup.find('.is-checked').removeClass('is-checked');
+//            $( this ).addClass('is-checked');
+//        });
+//    });
     
     state.btnFilter.show();
     state.btnSort.show();

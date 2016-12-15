@@ -1,0 +1,91 @@
+{
+  "Categories" : {
+		
+    "Programming" : {
+      "Tags" : [ 0, 1 ]
+    },
+    "WebDev" : {
+      "Tags" : [ 0, 1 ]
+    },
+		"JavaScript" : {
+      "Tags" : [ 0, 1 ]
+    },
+		"HTML" : {
+      "Tags" : [ 0, 1 ]
+    },
+		"CSS" : {
+      "Tags" : [0, 1 ]
+    },
+		"GIT" : {
+      "Tags" : [ 0, 1 ]
+    },
+		"Flash" : {
+      "Tags" : [ 0, 1 ]
+    },
+		"SVG" : {
+      "Tags" : [ 1 ]
+    },
+		"VR" : {
+      "Tags" : [ 0, 1, 2 ]
+    },
+		"WordPress" : {
+      "Tags" : [ 0, 1 ]
+    },
+		"Unity" : {
+      "Tags" : [ 0, 1, 2 ]
+    },
+		"TV" : {
+      "Tags" : [ 2 ]
+    },
+		"Movies" : {
+      "Tags" : [  2 ]
+    },
+		"Art" : {
+      "Tags" : [  2 ]
+    },
+		"Fitness" : {
+      "Tags" : [  2 ]
+    },
+		"History" : {
+      "Tags" : [ 1, 2 ]
+    },
+		"Podcasts" : {
+      "Tags" : [  1, 2 ]
+    },
+		"Health" : {
+      "Tags" : [ 2 ]
+    },
+		"Electronics" : {
+      "Tags" : [  1, 2 ]
+    },
+		"Props" : {
+      "Tags" : [  2 ]
+    },
+		"Travel" : {
+      "Tags" : [  2 ]
+    }
+		
+  },
+  "Pages" : {
+    "WebDev" : {
+      "Links" : {
+        "coollink1" : {
+          "description" : "a Groogle link",
+          "href" : "http://google.com",
+					"visited" : false
+        },
+				"froollink2" : {
+          "description" : "a frroogle link",
+          "href" : "http://google.com",
+					"visited" : false
+        },
+				"boollink3" : {
+          "description" : "a boogle link",
+          "href" : "http://google.com",
+					"visited" : true
+        }
+      }
+    }
+  },
+  "Tags" : [ "program", "edu", "fun" ]
+}
