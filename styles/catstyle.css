@@ -1,7 +1,18 @@
-i > .was-visited{
+span > .was-visited{
 	background-color: green;
 }
 
 section.section--center {
   max-width: 860px;
+}
+
+.mdl-textfield > h6{
+	color: black;
+	margin: 0px;
+	font-weight: 600;
+}
+
+.mdl-text-field .dumbass{
+	padding: 0;
+	background-color: green;
 }

@@ -45,6 +45,8 @@ const CatLinks = (self) => {
 		renderAllLinks(state),
 		filterLinks(state),
 		clearLinks(state),
+		updateLink(state),
+		validateForm(state),
 		
 		bugo(state)
 	)
@@ -77,9 +79,7 @@ const onSignIn = (state) => ({
 				}
 			}).catch(function(){
 				
-			});	
-			
-				
+			});				
 		}							
 	}
 });
@@ -106,18 +106,16 @@ const loadItems = (state) => ({
     }).then(function(){
 			console.log('completed load');
 			
-			state.self.renderAllLinks(state.linkArray);
-			
-			$("#cleariT").on("click", function() {
-				console.log("clearing");
-        state.self.clearLinks(); 
-    	});
-			
+			state.self.renderAllLinks(state.linkArray);	
+		
 			 state.tabButtons.on("click", "a", function() {
 				 var filterValue = $(this).attr('data-filter'); 				 
 				 var tempLinks = [];
 				 if(filterValue === "showAll"){
 					 tempLinks = state.linkArray; 
+				 }
+				 else if(filterValue === "noVisit"){
+					 tempLinks = state.self.filterLinks("visited", false, true);
 				 }
 				 else{
 					 tempLinks = state.self.filterLinks(filterValue, true, true);
@@ -143,15 +141,65 @@ const loadItems = (state) => ({
 				$("#linkUrl").val(linkInfo[0].href);
 				$("#linkDescrip").val(linkInfo[0].description);
 				
+				if(linkInfo[0].visited){					
+					$("#visitedLabel").addClass('is-checked');
+				}
+				else{
+					$("#visitedLabel").removeClass('is-checked');
+				}
 			//	$("#sample1").attr();
 				$("#addLinkTab").addClass("is-active");				 
-				$('#fixed-tab-3').addClass('is-active');
+				$('#editTab').addClass('is-active');
 			})
+			
+			$("#updateLink").on("click", function(){
+				
+				var id = $("#linkName").val();
+				var descript = $("#linkDescrip").val();
+				var url = $("#linkUrl").val();
+				var visit = $("#visitedLabel").hasClass('is-checked');
+				
+				var formTest = [];
+				formTest.push(id, descript, url);				
+				
+				if(state.self.validateForm(formTest)){
+					state.self.updateLink(id, descript, url, visit);
+				}
+				else{
+					console.log("invalid data");
+				}
+				
+				
+			})
+				
 		})
 	}
 })
 
+const validateForm = (state) => ({
+	validateForm : (data) => {
+		for(var i = 0; i < data.length; i++){
+			console.log(data[i]);
+			if(!data[i]){
+				return false;
+			}						
+		}
+		return true;
+	}
+})
 
+const updateLink = (state) => ({
+	updateLink : (id, descript, url, visit) => {
+		state.PagesRef.child(state.roomName + "/Links/" + id)
+				.set({ 
+				description: descript,
+				href: url,
+				visited: visit
+			}).then(function(data){
+			 console.log('updated!');
+		})
+		}
+});
 
 const filterLinks = (state) =>({
 	filterLinks : (filterKey, filterValue, filterByKey) => {		
@@ -225,18 +273,16 @@ const renderLink = (state) => ({
 		
 		var span2 = $("<span>", {
 			class: "mdl-list__item-primary-content",
-			html: "<span class='mdl-list__item-secondary-content'><a class='mdl-list__item-secondary-action'><i id='" + linkData.key +  "' class='material-icons star'>star</i></a></span>"
+			html: "<span class='mdl-list__item-secondary-content'><a class='mdl-list__item-secondary-action'><i id='" + linkData.key +  "' class='material-icons build'>build</i></a></span>"
 		});
 		
-		span1.appendTo(listItem);
-		span2.appendTo(listItem);
+		listItem.append(span1, span2);
 		listItem.appendTo(linkList);
 		
 		if(finalCount){
 			componentHandler.upgradeDom();
 		}
 				
-
 	}	
 })
 
@@ -246,8 +292,6 @@ const bugo = (state) => ({
 	}
 })
 
-
-	
 $(document).ready(function(){
 	  
     window.WebLinker = CatLinks();	  

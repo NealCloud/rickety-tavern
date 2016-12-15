@@ -133,7 +133,6 @@ const loadItems = (state) => ({
 const renderCats = (state) => ({
 		renderCats : (title, tags, final) => {
 			
-			
 			//get the tags associated with each Category and put them in a string
 			var tempTags = "";
 			for(var i in tags){
@@ -172,20 +171,12 @@ const startIso = (state) => ({
 			 state.iso =  state.grid.isotope({
                   // options
                   itemSelector: '.grid-item',
-                  layoutMode: 'masonry',
-			 
-									//percentPosition: true,
-//									masonry: {
-//										columnWidth: '.grid-sizer'
-//									},
+                  layoutMode: 'masonry',	
                     getSortData: {
                         name: '.name',                       
                         number: '.number parseInt'    
                  }
 					})
-		 
-			
-   
 			
     //create filter button handler
      state.btnFilter.on("click", "a", function() {
@@ -197,10 +188,7 @@ const startIso = (state) => ({
           var sortByValue = $(this).attr('data-sort');
           state.iso.isotope({ sortBy: sortByValue });
     });
-			 
-			  
-			 
-			 
+			 	 
 		state.btnShuffle.on( 'click', function() {
          state.iso.isotope('shuffle');
     });	 
