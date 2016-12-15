@@ -2,71 +2,101 @@
   "Categories" : {
 		
     "Programming" : {
-      "Tags" : [ 0, 1 ]
+      "Tags" : [ 0, 1 ],
+			"pic" : "pics/program.png"
     },
     "WebDev" : {
-      "Tags" : [ 0, 1 ]
+      "Tags" : [ 0, 1 ],
+			"pic" : "pics/w3.jpg"
     },
 		"JavaScript" : {
-      "Tags" : [ 0, 1 ]
+      "Tags" : [ 0, 1 ],
+			"pic" : "pics/javascript.png"
     },
 		"HTML" : {
-      "Tags" : [ 0, 1 ]
+      "Tags" : [ 0, 1 ],
+			"pic" : "pics/html.png"
     },
 		"CSS" : {
-      "Tags" : [0, 1 ]
+      "Tags" : [0, 1 ],
+			"pic" : "pics/css.png"
     },
 		"GIT" : {
-      "Tags" : [ 0, 1 ]
+      "Tags" : [ 0, 1 ],
+			"pic" : "pics/git.png"
     },
 		"Flash" : {
-      "Tags" : [ 0, 1 ]
+      "Tags" : [ 0, 1 ],
+			"pic" : "pics/flash.jpeg"
     },
 		"SVG" : {
-      "Tags" : [ 1 ]
+      "Tags" : [ 1 ],
+			"pic" : "pics/tomato.png"
     },
 		"VR" : {
-      "Tags" : [ 0, 1, 2 ]
+      "Tags" : [ 0, 1, 2 ],
+			"pic" : "pics/oculus.png"
     },
 		"WordPress" : {
-      "Tags" : [ 0, 1 ]
+      "Tags" : [ 0, 1 ],
+			"pic" : "pics/wordpress.png"
     },
 		"Unity" : {
-      "Tags" : [ 0, 1, 2 ]
+      "Tags" : [ 0, 1, 2 ],
+			"pic" : "pics/unity.png"
     },
 		"TV" : {
-      "Tags" : [ 2 ]
+      "Tags" : [ 2 ],
+			"pic" : "pics/tv.jpg"
     },
 		"Movies" : {
-      "Tags" : [  2 ]
+      "Tags" : [  2 ],
+			"pic" : "pics/movies.png"
     },
 		"Art" : {
-      "Tags" : [  2 ]
+      "Tags" : [  2 ],
+			"pic" : "pics/art.jpg"
     },
 		"Fitness" : {
-      "Tags" : [  2 ]
+      "Tags" : [  2 ],
+			"pic" : "pics/fitness.jpg"
     },
 		"History" : {
-      "Tags" : [ 1, 2 ]
+      "Tags" : [ 1, 2 ],
+			"pic" : "pics/History.png"
     },
 		"Podcasts" : {
-      "Tags" : [  1, 2 ]
+      "Tags" : [  1, 2 ],
+			"pic" : "pics/podcast.jpg"
     },
 		"Health" : {
-      "Tags" : [ 2 ]
+      "Tags" : [ 2 ],
+			"pic" : "pics/health.jpg"
     },
 		"Electronics" : {
-      "Tags" : [  1, 2 ]
+      "Tags" : [  1, 2 ],
+			"pic" : "pics/electronic.png"
     },
 		"Props" : {
-      "Tags" : [  2 ]
+      "Tags" : [  2 ],
+			"pic" : "pics/props.png"
     },
 		"Travel" : {
-      "Tags" : [  2 ]
+      "Tags" : [  2 ],
+			"pic" : "pics/flight.png"
     }
 		
   },
   "Pages" : {
+		"Programming" : {
+      "Links" : {
+        "coollink1" : {
+          "description" : "a Groogle link",
+          "href" : "http://google.com",
+					"visited" : false
+        }	
+			}
+    },
     "WebDev" : {
       "Links" : {
         "coollink1" : {
@@ -85,6 +115,177 @@
 					"visited" : true
         }
       }
+    },
+		"JavaScript" : {      
+			"Links" : {
+        "coollink1" : {
+          "description" : "a Groogle link",
+          "href" : "http://google.com",
+					"visited" : false
+        }
+			}
+    },
+		"HTML" : {
+     "Links" : {
+        "coollink1" : {
+          "description" : "a Groogle link",
+          "href" : "http://google.com",
+					"visited" : false
+        }	
+		 }
+    },
+		"CSS" : {
+     "Links" : {
+        "coollink1" : {
+          "description" : "a Groogle link",
+          "href" : "http://google.com",
+					"visited" : false
+        }	
+		 }
+    },
+		"GIT" : {
+      "Links" : {
+        "coollink1" : {
+          "description" : "a Groogle link",
+          "href" : "http://google.com",
+					"visited" : false
+        }	
+			}
+    },
+		"Flash" : {
+      "Links" : {
+        "coollink1" : {
+          "description" : "a Groogle link",
+          "href" : "http://google.com",
+					"visited" : false
+        }		
+			}
+    },
+		"SVG" : {
+     "Links" : {
+        "coollink1" : {
+          "description" : "a Groogle link",
+          "href" : "http://google.com",
+					"visited" : false
+        }	
+		 }
+    },
+		"VR" : {
+     "Links" : {
+        "coollink1" : {
+          "description" : "a Groogle link",
+          "href" : "http://google.com",
+					"visited" : false
+        }	
+		 }
+    },
+		"WordPress" : {
+      "Links" : {
+        "coollink1" : {
+          "description" : "a Groogle link",
+          "href" : "http://google.com",
+					"visited" : false
+        }
+			}
+    },
+		"Unity" : {
+      "Links" : {
+        "coollink1" : {
+          "description" : "a Groogle link",
+          "href" : "http://google.com",
+					"visited" : false
+        }
+			}
+    },
+		"TV" : {
+      "Links" : {
+        "coollink1" : {
+          "description" : "a Groogle link",
+          "href" : "http://google.com",
+					"visited" : false
+        }	
+			}
+    },
+		"Movies" : {
+      "Links" : {
+        "coollink1" : {
+          "description" : "a Groogle link",
+          "href" : "http://google.com",
+					"visited" : false
+        }
+			}
+    },
+		"Art" : {
+     "Links" : {
+        "coollink1" : {
+          "description" : "a Groogle link",
+          "href" : "http://google.com",
+					"visited" : false
+        }	
+		 }
+    },
+		"Fitness" : {
+      "Links" : {
+        "coollink1" : {
+          "description" : "a Groogle link",
+          "href" : "http://google.com",
+					"visited" : false
+        }		
+			}
+    },
+		"History" : {
+     "Links" : {
+        "coollink1" : {
+          "description" : "a Groogle link",
+          "href" : "http://google.com",
+					"visited" : false
+        }	
+		 }
+    },
+		"Podcasts" : {
+      "Links" : {
+        "coollink1" : {
+          "description" : "a Groogle link",
+          "href" : "http://google.com",
+					"visited" : false
+        }	
+			}
+    },
+		"Health" : {
+      "Links" : {
+        "coollink1" : {
+          "description" : "a Groogle link",
+          "href" : "http://google.com",
+					"visited" : false
+        }	
+			}
+    },
+		"Electronics" : {
+      "Links" : {
+        "coollink1" : {
+          "description" : "a Groogle link",
+          "href" : "http://google.com",
+					"visited" : false
+        }	
+			}
+    },
+		"Props" : {
+     "Links" : {
+        "coollink1" : {
+          "description" : "a Groogle link",
+          "href" : "http://google.com",
+					"visited" : false
+        }		
+		 }
+    },
+		"Travel" : {
+      "Links" : {
+        "coollink1" : {
+          "description" : "a Groogle link",
+          "href" : "http://google.com",
+					"visited" : false
+        }	
+			}
     }
   },
   "Tags" : [ "program", "edu", "fun" ]

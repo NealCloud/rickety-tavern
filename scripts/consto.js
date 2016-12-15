@@ -114,12 +114,13 @@ const loadItems = (state) => ({
 			var count = 0;			 
       for(let i in cats){
 								count += 1;
-							  var tagInfo = cats[i].Tags              
+							  var tagInfo = cats[i].Tags;
+								var pic = cats[i].pic;
 							  if(count == len){
-									state.self.renderCats(i, tagInfo, true);
+									state.self.renderCats(i, tagInfo, pic, true);
 								}	
 								 else{
-									 	state.self.renderCats(i, tagInfo);
+									 	state.self.renderCats(i, tagInfo, pic);
 								}                           
         }		       
 			
@@ -131,7 +132,7 @@ const loadItems = (state) => ({
 
 //Render the Categories on the Grid
 const renderCats = (state) => ({
-		renderCats : (title, tags, final) => {
+		renderCats : (title, tags, pic, final) => {
 			
 			//get the tags associated with each Category and put them in a string
 			var tempTags = "";
@@ -147,7 +148,7 @@ const renderCats = (state) => ({
 			});
 			var linkDiv = $("<div>",{
 				 class: "grid-item " + rando + tempTags,
-				 html: "<img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg' />" +
+				 html: "<img src='" + pic + "' />" +
 				"<p class='name'>" + title + "</p>"
 				
 			});
