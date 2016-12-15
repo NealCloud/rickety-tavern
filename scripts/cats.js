@@ -131,7 +131,7 @@ const loadItems = (state) => ({
 					state.self.renderAllLinks(tempLinks);
 			 });
 			
-			state.linkList.on("click", "i", function(){
+			state.linkList.on("click", ".build", function(){
 				var id = $(this).attr("id");
 				var linkInfo = (state.self.filterLinks("key", id, true));
 				$(".mdl-layout__tab").removeClass("is-active");
@@ -260,8 +260,8 @@ const renderLink = (state) => ({
 		})		
 		var span1 = $("<span>",{
 			class: "mdl-list__item-primary-content",
-			html: "<i class='material-icons mdl-list__item-avatar" + visited + "'>http</i><span>" + 
-			linkData.key + "</span><span class='mdl-list__item-text-body'>" +
+			html: "<i class='material-icons mdl-list__item-avatar" + visited + "'>http</i><a href='" + linkData.href + "' target='_blank'><span>" + 
+			linkData.key + "</span></a><span class='mdl-list__item-text-body'>" +
 			linkData.description + "</span>"
 		});
 		

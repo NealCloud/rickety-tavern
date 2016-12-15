@@ -27,13 +27,16 @@
 
 #background1{
 	background-image: url(/pics/topM.png);
+
 }
 #background2{
 	background-image: url(/pics/topM2.png);
+	
 	color: #d47719;
 }
 #background3{
 	background-image: url(/pics/topM3.png);
+	
 }
 
 .grid-item img {	  
