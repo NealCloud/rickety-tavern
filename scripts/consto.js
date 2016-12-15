@@ -102,7 +102,7 @@ const loadItems = (state) => ({
 		
 		var randNum = Math.floor(Math.random() * (state.randomLinkTitle.length));
 		state.pageTitle.text(state.randomLinkTitle[randNum]);
-		state
+		
     //retrive the tags first
     state.self.getTags();    
     
@@ -136,7 +136,7 @@ const renderCats = (state) => ({
 			//get the tags associated with each Category and put them in a string
 			var tempTags = "";
 			for(var i in tags){
-					tempTags += " " + state.tagList[i - 1];
+					tempTags += " " + state.tagList[tags[i]];
 			}
 			//create a random grid length/height
 			var randNum = Math.floor(Math.random() * (state.randomGridClass.length));
@@ -191,6 +191,8 @@ const startIso = (state) => ({
 			 	 
 		state.btnShuffle.on( 'click', function() {
          state.iso.isotope('shuffle');
+				var randNum = Math.floor(Math.random() * (state.randomLinkTitle.length));
+				state.pageTitle.text(state.randomLinkTitle[randNum]);
     });	 
     //create checked class button toggler for each group
 //    state.btnGroup.each( function( i, buttonGroup ) {
